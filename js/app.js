@@ -40,7 +40,7 @@ loadCategories();
 //close badge
 const closeBadge = () => {
     const badge = document.getElementById("badge");
-    const btnClose = document.getElementById("btn-close");
+    const btnClose = document.getElementById("btn-closeBadge");
 
     if (btnClose) {
         btnClose.addEventListener("click", (e) => {
@@ -70,3 +70,31 @@ const toggleSearch = () => {
     }
 }
 toggleSearch();
+
+//Filter
+const toggleFilter = () => {
+    const filterButton = document.getElementById("btn-filter");
+    const filterContainer = document.getElementById("filter-container");
+    const btnCloseFilters = document.getElementById("btn-closeFilters");
+
+    if (filterButton) {
+        filterButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (filterContainer) {
+                filterContainer.style.display = "block";
+                filterButton.innerHTML = ""
+            }
+        });
+    }
+
+    if (btnCloseFilters) {
+        btnCloseFilters.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (filterContainer) {
+                filterContainer.style.display = "none";
+                filterButton.innerHTML = "Filtrar (6)";
+            }
+        });
+    }
+}
+toggleFilter();

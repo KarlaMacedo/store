@@ -248,6 +248,27 @@ h3 {
   display: flex;
 }
 
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 0 9px #ededed;
+}
+
+.filter-options{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+}
+
 .list-item {
   justify-content: center;
   align-items: center;
