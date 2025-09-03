@@ -16,7 +16,7 @@ const fetchData = async (endpoint) => {
 
 const loadProducts = async () => {
     try {
-        const products = await fetchData("products?limit=10&offset=0");
+        const products = await fetchData("products?limit=18&offset=0");
         console.log("Productos:", products);
         return products;
     } catch (error) {
@@ -33,8 +33,6 @@ const loadCategories = async () => {
         console.error(error);
     }
 }
-
-loadProducts();
 loadCategories();
 
 //close badge
@@ -59,7 +57,7 @@ const toggleSearch = () => {
     const searchForm = document.getElementById("search-form");
 
     if (searchButton) {
-        searchButton.addEventListener("click", (e) =>{
+        searchButton.addEventListener("click", (e) => {
             e.preventDefault();
             if (searchForm) {
                 searchForm.style.display = "block";
@@ -98,3 +96,86 @@ const toggleFilter = () => {
     }
 }
 toggleFilter();
+
+//Render products
+const checkImageUrl = async (url) => {
+    try {
+        const fallbackImageUrl = "https://placehold.co/600x400";
+
+        if (!url || typeof url !== 'string') {
+            return fallbackImageUrl;
+        }
+
+        const response = await fetch(url, { method: "HEAD" });
+
+        if (!response.ok) {
+            return fallbackImageUrl;
+        }
+
+        return url;
+    } catch (error) {
+        return "https://placehold.co/600x400";
+    }
+};
+
+const getRandomCategoryStyle = () => {
+    const categoriesStyles = ["basic", "fashion", "best-selling", "monogram", "accesories"];
+    const randomIndex = Math.floor(Math.random() * categoriesStyles.length);
+    console.log(categoriesStyles[randomIndex]);
+    return categoriesStyles[randomIndex];
+};
+
+const renderProducts = async () => {
+    const productsContainer = document.getElementById("grid-products");
+    if (!productsContainer) return;
+
+    productsContainer.innerHTML = "";
+
+    const products = await loadProducts();
+    if (!products || products.length === 0) {
+        productsContainer.style.display = "flex";
+        productsContainer.innerHTML = "<p class='no-products'>No se encontraron productos.</p>";
+        return;
+    }
+
+    const productsPromises = products.map(async (product) => {
+        const productCard = document.createElement("div");
+        productCard.classList.add("card-product", "w-container", "w-layout-blockcontainer");
+
+        const randomBadgeClass = getRandomCategoryStyle();
+
+        const finalImageUrl = await checkImageUrl(product.images[0]);
+
+        const truncatedTitle = product.title.length > 30
+            ? product.title.substring(0, 30) + "..."
+            : product.title;
+
+        const truncatedDescription = product.description.length > 70
+            ? product.description.substring(0, 70) + "..."
+            : product.description;
+
+        productCard.innerHTML = `
+            <div class="category-badges">
+                <div class="${randomBadgeClass} upper-case">
+                    <div>${product.category.name}</div>
+                </div>
+            </div>
+            <img src="${finalImageUrl}" alt="${product.title}" loading="lazy" width="200" height="250" class="img-product" />
+            <div>
+                <h2 class="title-product upper-case">${truncatedTitle}</h2>
+                <div class="text-product">${truncatedDescription}</div>
+                <div class="price-product">$${product.price}</div>
+            </div>
+        `;
+
+        return productCard;
+    });
+
+    const productCards = await Promise.all(productsPromises);
+
+    productCards.forEach((productCard) => {
+        productsContainer.appendChild(productCard);
+    });
+};
+
+renderProducts();
