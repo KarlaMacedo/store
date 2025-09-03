@@ -208,6 +208,10 @@ h3 {
   height: 1rem;
 }
 
+.search-input.w-input{
+  margin-bottom: 0px;
+}
+
 .btn.upper-case.btn-filter {
   text-underline-offset: 3px;
   text-decoration: underline;

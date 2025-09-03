@@ -1,4 +1,6 @@
 const API_URL = "https://api.escuelajs.co/api/v1";
+let allProducts = [];
+let filteredProducts = [];
 
 //Fetch products and categories
 const fetchData = async (endpoint) => {
@@ -31,7 +33,17 @@ const loadCategories = async () => {
         console.error(error);
     }
 }
-loadCategories();
+
+const initProducts = async () => {
+    const products = await loadProducts();
+    if (!products) return;
+
+    allProducts = products;
+    filteredProducts = [...allProducts];
+    renderProducts(filteredProducts);
+};
+initProducts();
+
 
 //close badge
 const closeBadge = () => {
@@ -66,6 +78,30 @@ const toggleSearch = () => {
     }
 }
 toggleSearch();
+
+const handleSearch = () => {
+    const inputSearch = document.getElementById("input-search");
+    const btnSearchForm = document.getElementById("btn-searchForm");
+    const btnCleanSearch = document.getElementById("btn-cleanSearch");
+    if (!inputSearch || !btnSearchForm) return;
+
+    btnSearchForm.addEventListener("click", (e) => {
+        e.preventDefault();
+        const query = inputSearch.value.toLowerCase();
+        filteredProducts = allProducts.filter((product) =>
+            product.title.toLowerCase().includes(query)
+        );
+        renderProducts(filteredProducts);
+    });
+
+    btnCleanSearch.addEventListener("click", (e) => {
+        e.preventDefault();
+        inputSearch.value = "";
+        filteredProducts = [...allProducts];
+        renderProducts(filteredProducts);
+    });
+};
+handleSearch();
 
 //Filter
 const toggleFilter = () => {
@@ -144,7 +180,7 @@ const renderNormalCard = async (product) => {
                     <div>${product.category.name}</div>
                 </div>
             </div>
-            <img src="${finalImageUrl}" alt="${product.title}" loading="lazy" width="200" height="250" class="img-product" />
+            <img src="${finalImageUrl}" alt="${product.title}" loading="lazy" width="200" height="250" class="img-product" crossorigin="anonymous"/>
             <div>
                 <h2 class="title-product upper-case">${truncatedTitle}</h2>
                 <div class="text-product">${truncatedDescription}</div>
@@ -201,20 +237,20 @@ const renderEndBigCard = async (product) => {
     return productCard;
 };
 
-const renderProducts = async () => {
+const renderProducts = async (productsArray) => {
     const productsContainer = document.getElementById("grid-products");
     if (!productsContainer) return;
 
     productsContainer.innerHTML = "";
+    productsContainer.style.display = "";
 
-    const products = await loadProducts();
-    if (!products || products.length === 0) {
+    if (!productsArray || productsArray.length === 0) {
         productsContainer.style.display = "flex";
         productsContainer.innerHTML = "<p class='no-products'>No se encontraron productos.</p>";
         return;
     }
 
-    const productsPromises = products.map((product, index) => {
+    const productsPromises = productsArray.map((product, index) => {
         if (index === 4) {
             return renderBigCard(product);
         } else if (index === 13) {
@@ -230,7 +266,6 @@ const renderProducts = async () => {
         productsContainer.appendChild(productCard);
     });
 };
-
 renderProducts();
 
 //Render categories
@@ -267,5 +302,4 @@ const renderCategories = async () => {
         categoriesContainer.appendChild(categoryElement);
     });
 };
-
 renderCategories();
