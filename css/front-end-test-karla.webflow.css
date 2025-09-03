@@ -793,7 +793,7 @@ h3 {
 
   .header-page {
     flex-flow: column;
-    height: 37vh;
+    height: 25vh;
     margin-top: 20px;
     margin-bottom: 20px;
   }
@@ -848,6 +848,12 @@ h3 {
 
   .body {
     font-size: 10px;
+  }
+
+  .sort-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
   }
 }
 
