@@ -1,7 +1,7 @@
 const API_URL = "https://api.escuelajs.co/api/v1";
 
 //Fetch products and categories
-async function fetchData(endpoint) {
+const fetchData = async (endpoint) => {
     try {
         const response = await fetch(`${API_URL}/${endpoint}`);
         if (!response.ok) {
@@ -14,7 +14,7 @@ async function fetchData(endpoint) {
     }
 }
 
-async function loadProducts() {
+const loadProducts = async () => {
     try {
         const products = await fetchData("products?limit=10&offset=0");
         console.log("Productos:", products);
@@ -24,7 +24,7 @@ async function loadProducts() {
     }
 }
 
-async function loadCategories() {
+const loadCategories = async () => {
     try {
         const categories = await fetchData("categories?limit=40");
         console.log("Categorías:", categories);
@@ -38,12 +38,12 @@ loadProducts();
 loadCategories();
 
 //close badge
-function closeBadge() {
+const closeBadge = () => {
     const badge = document.getElementById("badge");
     const btnClose = document.getElementById("btn-close");
 
     if (btnClose) {
-        btnClose.addEventListener("click", function (e) {
+        btnClose.addEventListener("click", (e) => {
             e.preventDefault();
             if (badge) {
                 badge.style.display = "none";
@@ -54,12 +54,12 @@ function closeBadge() {
 closeBadge();
 
 //search
-function toggleSearch() {
+const toggleSearch = () => {
     const searchButton = document.getElementById("btn-search");
     const searchForm = document.getElementById("search-form");
 
     if (searchButton) {
-        searchButton.addEventListener("click", function (e) {
+        searchButton.addEventListener("click", (e) =>{
             e.preventDefault();
             if (searchForm) {
                 searchForm.style.display = "block";
