@@ -53,3 +53,20 @@ function closeBadge() {
 }
 closeBadge();
 
+//search
+function toggleSearch() {
+    const searchButton = document.getElementById("btn-search");
+    const searchForm = document.getElementById("search-form");
+
+    if (searchButton) {
+        searchButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (searchForm) {
+                searchForm.style.display = "block";
+                searchButton.style.display = "none";
+                searchForm.style.display = "flex";
+            }
+        });
+    }
+}
+toggleSearch();
