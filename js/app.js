@@ -36,3 +36,20 @@ async function loadCategories() {
 
 loadProducts();
 loadCategories();
+
+//close badge
+function closeBadge() {
+    const badge = document.getElementById("badge");
+    const btnClose = document.getElementById("btn-close");
+
+    if (btnClose) {
+        btnClose.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (badge) {
+                badge.style.display = "none";
+            }
+        });
+    }
+}
+closeBadge();
+
