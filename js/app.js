@@ -122,36 +122,23 @@ const getRandomCategoryStyle = () => {
     return categoriesStyles[randomIndex];
 };
 
-const renderProducts = async () => {
-    const productsContainer = document.getElementById("grid-products");
-    if (!productsContainer) return;
+const renderNormalCard = async (product) => {
+    const productCard = document.createElement("div");
+    productCard.classList.add("card-product", "w-container", "w-layout-blockcontainer");
 
-    productsContainer.innerHTML = "";
+    const randomBadgeClass = getRandomCategoryStyle();
 
-    const products = await loadProducts();
-    if (!products || products.length === 0) {
-        productsContainer.style.display = "flex";
-        productsContainer.innerHTML = "<p class='no-products'>No se encontraron productos.</p>";
-        return;
-    }
+    const finalImageUrl = await checkImageUrl(product.images[0]);
 
-    const productsPromises = products.map(async (product) => {
-        const productCard = document.createElement("div");
-        productCard.classList.add("card-product", "w-container", "w-layout-blockcontainer");
+    const truncatedTitle = product.title.length > 30
+        ? product.title.substring(0, 30) + "..."
+        : product.title;
 
-        const randomBadgeClass = getRandomCategoryStyle();
+    const truncatedDescription = product.description.length > 70
+        ? product.description.substring(0, 70) + "..."
+        : product.description;
 
-        const finalImageUrl = await checkImageUrl(product.images[0]);
-
-        const truncatedTitle = product.title.length > 30
-            ? product.title.substring(0, 30) + "..."
-            : product.title;
-
-        const truncatedDescription = product.description.length > 70
-            ? product.description.substring(0, 70) + "..."
-            : product.description;
-
-        productCard.innerHTML = `
+    productCard.innerHTML = `
             <div class="category-badges">
                 <div class="${randomBadgeClass} upper-case">
                     <div>${product.category.name}</div>
@@ -165,7 +152,76 @@ const renderProducts = async () => {
             </div>
         `;
 
-        return productCard;
+    return productCard;
+};
+
+const renderBigCard = async (product) => {
+    const productCard = document.createElement("div");
+    productCard.classList.add("w-layout-blockcontainer", "card-product", "big-card", "w-container");
+    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400" ?
+        productCard.style.backgroundImage = "url('../images/fondo-bolsarosa.png')" :
+        productCard.style.backgroundImage = `url(${product.images[0]})`;
+
+    const randomBadgeClass = getRandomCategoryStyle();
+
+    productCard.innerHTML = `
+        <div class="category-badges big-card">
+            <div class="${randomBadgeClass} upper-case">
+                <div>${product.category.name}</div>
+            </div>
+        </div>
+        <div class="text-bigcard">
+            <h3 class="title-product upper-case">${product.title}</h3>
+            <a href="#" class="btn btn-buy upper-case w-button">Comprar</a>
+        </div>
+    `;
+    return productCard;
+};
+
+const renderEndBigCard = async (product) => {
+    const productCard = document.createElement("div");
+    productCard.classList.add("w-layout-blockcontainer", "card-product", "big-card", "end-card", "w-container");
+    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400" ?
+        productCard.style.backgroundImage = "url('../images/fondo-bolsablanca.png')" :
+        productCard.style.backgroundImage = `url(${product.images[0]})`;
+
+    const randomBadgeClass = getRandomCategoryStyle();
+
+    productCard.innerHTML = `
+        <div class="category-badges big-card">
+            <div class="${randomBadgeClass} upper-case">
+                <div>${product.category.name}</div>
+            </div>
+        </div>
+        <div class="text-bigcard">
+            <h3 class="title-product upper-case">${product.title}</h3>
+            <a href="#" class="btn btn-buy upper-case w-button">Comprar</a>
+        </div>
+    `;
+    return productCard;
+};
+
+const renderProducts = async () => {
+    const productsContainer = document.getElementById("grid-products");
+    if (!productsContainer) return;
+
+    productsContainer.innerHTML = "";
+
+    const products = await loadProducts();
+    if (!products || products.length === 0) {
+        productsContainer.style.display = "flex";
+        productsContainer.innerHTML = "<p class='no-products'>No se encontraron productos.</p>";
+        return;
+    }
+
+    const productsPromises = products.map((product, index) => {
+        if (index === 4) {
+            return renderBigCard(product);
+        } else if (index === 13) {
+            return renderEndBigCard(product);
+        } else {
+            return renderNormalCard(product);
+        }
     });
 
     const productCards = await Promise.all(productsPromises);
