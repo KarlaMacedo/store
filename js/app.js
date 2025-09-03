@@ -179,3 +179,40 @@ const renderProducts = async () => {
 };
 
 renderProducts();
+
+//Render categories
+const renderCategories = async () => {
+    const categoriesContainer = document.getElementById("filter-options");
+    if (!categoriesContainer) return;
+
+    categoriesContainer.innerHTML = "";
+
+    const categories = await loadCategories();
+
+    if (!categories || categories.length === 0) {
+        const btnFilterForm = document.getElementById("btn-filterForm");
+        btnFilterForm.style.display = "none";
+        categoriesContainer.innerHTML = "<p class='upper-case' style='text-align: center;'>No se encontraron categorías para filtrar.</p>";
+        return;
+    }
+
+    const categoryElements = categories.map((category) => {
+        const categoryElement = document.createElement("div");
+        categoryElement.classList.add("filter-option");
+        categoryElement.innerHTML = `
+            <input
+                type="checkbox"
+                id="${category.id}"
+                class="checkbox-filter w-checkbox"
+            />
+            <label for="${category.id}">${category.name}</label>
+        `;
+        return categoryElement;
+    });
+
+    categoryElements.forEach((categoryElement) => {
+        categoriesContainer.appendChild(categoryElement);
+    });
+};
+
+renderCategories();
