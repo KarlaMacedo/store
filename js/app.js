@@ -17,7 +17,6 @@ const fetchData = async (endpoint) => {
 const loadProducts = async () => {
     try {
         const products = await fetchData("products?limit=18&offset=0");
-        console.log("Productos:", products);
         return products;
     } catch (error) {
         console.error(error);
@@ -27,7 +26,6 @@ const loadProducts = async () => {
 const loadCategories = async () => {
     try {
         const categories = await fetchData("categories?limit=40");
-        console.log("Categorías:", categories);
         return categories;
     } catch (error) {
         console.error(error);
@@ -121,7 +119,6 @@ const checkImageUrl = async (url) => {
 const getRandomCategoryStyle = () => {
     const categoriesStyles = ["basic", "fashion", "best-selling", "monogram", "accesories"];
     const randomIndex = Math.floor(Math.random() * categoriesStyles.length);
-    console.log(categoriesStyles[randomIndex]);
     return categoriesStyles[randomIndex];
 };
 
