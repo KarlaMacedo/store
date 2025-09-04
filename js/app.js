@@ -418,6 +418,12 @@ const renderPagination = () => {
     const prevBtn = document.createElement("button");
     prevBtn.classList.add("btn", "btn-arrow", "btn-pagination", "w-button");
     prevBtn.textContent = "←";
+
+    if (currentPage === 1) {
+        prevBtn.disabled = true;
+        prevBtn.classList.add("disabled");
+    }
+
     prevBtn.addEventListener("click", (e) => {
         e.preventDefault();
         if (currentPage > 1) {
@@ -425,6 +431,7 @@ const renderPagination = () => {
             paginateProducts();
         }
     });
+
     paginationContainer.appendChild(prevBtn);
 
     for (let i = 1; i <= totalPages; i++) {
@@ -445,6 +452,12 @@ const renderPagination = () => {
     const nextBtn = document.createElement("button");
     nextBtn.classList.add("btn", "btn-arrow", "btn-pagination", "w-button");
     nextBtn.textContent = "→";
+
+    if (currentPage === totalPages) {
+        nextBtn.disabled = true;
+        nextBtn.classList.add("disabled");
+    }
+
     nextBtn.addEventListener("click", (e) => {
         e.preventDefault();
         if (currentPage < totalPages) {
@@ -452,5 +465,6 @@ const renderPagination = () => {
             paginateProducts();
         }
     });
+    
     paginationContainer.appendChild(nextBtn);
 };

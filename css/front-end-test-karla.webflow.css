@@ -253,6 +253,12 @@ h3 {
   font-weight: bold;
 }
 
+.btn-pagination.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .btn.btn-buy {
   color: #fff;
   text-underline-offset: 3px;
