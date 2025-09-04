@@ -137,40 +137,47 @@
           <h1 class="upper-case">TODOS los productos</h1>
           <div>Elegancia y funcionalidad en cada diseño.</div>
         </div>
-        <button
-          type="button"
-          class="btn upper-case btn-filter w-button"
-          id="btn-filter"
-        >
-          Filtrar
-        </button>
-      </div>
-      <div class="filter-container" style="display: none" id="filter-container">
-        <form action="/filter" class="filter w-form" id="filter-form">
-          <div class="filter-option">
-            <button
-              type="submit"
-              id="btn-filterForm"
-              class="btn upper-case btn-filter w-button"
-            >
-              Filtrar selección
-            </button>
-            <button
-              type="button"
-              id="btn-cleanFilter"
-              class="btn upper-case btn-filter w-button"
-            >
-              Limpiar filtros
-            </button>
-            <a
-              id="btn-closeFilters"
-              href="#"
-              class="btn button-primary btn-close w-button"
-            ></a>
+        <div class="filter-dropdown-container">
+          <button
+            type="button"
+            class="btn upper-case btn-filter w-button"
+            id="btn-filter"
+          >
+            Filtrar
+          </button>
+          <div
+            class="filter-container"
+            style="display: none"
+            id="filter-container"
+          >
+            <form action="/filter" class="filter w-form" id="filter-form">
+              <div class="filter-option">
+                <button
+                  type="submit"
+                  id="btn-filterForm"
+                  class="btn upper-case btn-filter w-button"
+                >
+                  Filtrar selección
+                </button>
+                <button
+                  type="button"
+                  id="btn-cleanFilter"
+                  class="btn upper-case btn-filter w-button"
+                >
+                  Limpiar filtros
+                </button>
+                <a
+                  id="btn-closeFilters"
+                  href="#"
+                  class="btn button-primary btn-close w-button"
+                ></a>
+              </div>
+              <div id="filter-options" class="filter-options"></div>
+            </form>
           </div>
-          <div id="filter-options" class="filter-options"></div>
-        </form>
+        </div>
       </div>
+
       <div class="sort-options">
         <button
           type="button"
