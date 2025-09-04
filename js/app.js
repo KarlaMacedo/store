@@ -325,11 +325,14 @@ const renderEndBigCard = async (product) => {
 };
 
 const renderProducts = async (productsArray) => {
+    const totalProducts = document.getElementById("total-products");
     const productsContainer = document.getElementById("grid-products");
     if (!productsContainer) return;
 
     productsContainer.innerHTML = "";
     productsContainer.style.display = "";
+
+    totalProducts.innerHTML = `${productsArray.length} artículos`;
 
     if (!productsArray || productsArray.length === 0) {
         productsContainer.style.display = "flex";
