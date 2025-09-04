@@ -131,6 +131,43 @@ const toggleFilter = () => {
 }
 toggleFilter();
 
+//Sort
+const handleSort = () => {
+    const btnPriceAsc = document.getElementById("btn-priceAsc");
+    const btnPriceDesc = document.getElementById("btn-priceDesc");
+    const btnNameAsc = document.getElementById("btn-nameAsc");
+    const btnNameDesc = document.getElementById("btn-nameDesc");
+
+    if (btnPriceAsc) {
+        btnPriceAsc.addEventListener("click", () => {
+            filteredProducts.sort((a, b) => a.price - b.price);
+            renderProducts(filteredProducts);
+        });
+    }
+
+    if (btnPriceDesc) {
+        btnPriceDesc.addEventListener("click", () => {
+            filteredProducts.sort((a, b) => b.price - a.price);
+            renderProducts(filteredProducts);
+        });
+    }
+
+    if (btnNameAsc) {
+        btnNameAsc.addEventListener("click", () => {
+            filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
+            renderProducts(filteredProducts);
+        });
+    }
+
+    if (btnNameDesc) {
+        btnNameDesc.addEventListener("click", () => {
+            filteredProducts.sort((a, b) => b.title.localeCompare(a.title));
+            renderProducts(filteredProducts);
+        });
+    }
+};
+handleSort();
+
 //Render products
 const checkImageUrl = async (url) => {
     try {
