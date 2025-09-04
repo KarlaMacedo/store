@@ -332,7 +332,7 @@ const renderProducts = async (productsArray) => {
     productsContainer.innerHTML = "";
     productsContainer.style.display = "";
 
-    totalProducts.innerHTML = `${productsArray.length} artículos`;
+    if (totalProducts) totalProducts.innerHTML = `${productsArray.length} artículos`;
 
     if (!productsArray || productsArray.length === 0) {
         productsContainer.style.display = "flex";
