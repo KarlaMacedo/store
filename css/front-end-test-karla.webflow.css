@@ -266,6 +266,10 @@ h3 {
   text-decoration: underline;
 }
 
+.btn.btn-buy:hover {
+  color: black
+}
+
 .search-containerForm {
   position: relative;
 }
