@@ -114,7 +114,6 @@ const toggleFilter = () => {
             e.preventDefault();
             if (filterContainer) {
                 filterContainer.style.display = "block";
-                filterButton.innerHTML = ""
             }
         });
     }
@@ -124,12 +123,49 @@ const toggleFilter = () => {
             e.preventDefault();
             if (filterContainer) {
                 filterContainer.style.display = "none";
-                filterButton.innerHTML = "Filtrar (6)";
             }
         });
     }
 }
 toggleFilter();
+
+const handleFilter = () => {
+    const cleanFilterButton = document.getElementById("btn-cleanFilter");
+    const btnFilter = document.getElementById("btn-filter");
+    const filterForm = document.getElementById("filter-form");
+    if (!filterForm) return;
+
+
+    filterForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const selectedCategories = Array.from(
+            filterForm.querySelectorAll("input[type='checkbox']:checked")
+        ).map((checkbox) => parseInt(checkbox.id));
+
+        if (selectedCategories.length === 0) {
+            filteredProducts = [...allProducts];
+            btnFilter.innerHTML = "Filtrar";
+        } else {
+            filteredProducts = allProducts.filter((product) =>
+                selectedCategories.includes(product.category.id)
+            );
+            btnFilter.innerHTML = `Filtrar (${selectedCategories.length})`;
+        }
+
+        renderProducts(filteredProducts);
+    });
+
+    cleanFilterButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        filterForm.reset();
+        filteredProducts = [...allProducts];
+        renderProducts(filteredProducts);
+        btnFilter.innerHTML = "Filtrar";
+    });
+};
+handleFilter();
+
 
 //Sort
 const handleSort = () => {

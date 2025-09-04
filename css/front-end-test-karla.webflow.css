@@ -544,6 +544,10 @@ h3 {
   margin-top: 10vh;
 }
 
+.sort-options{
+  margin: 20px 0px 15px 0px;
+}
+
 @media screen and (max-width: 991px) {
   .container {
     max-width: 728px;
@@ -870,7 +874,6 @@ h3 {
   .sort-options {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
   }
 }
 
