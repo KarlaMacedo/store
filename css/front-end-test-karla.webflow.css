@@ -185,11 +185,17 @@ h3 {
   background-color: #3898ec00;
   min-height: 11px;
   padding: 6px;
+  border-radius: 3px;
+}
+
+.btn:hover {
+  background: #e2e2e2;
 }
 
 .btn:focus {
   color: #000;
   font-weight: 700;
+  font-weight: bold;
 }
 
 .btn.button-primary {
@@ -228,22 +234,23 @@ h3 {
   text-decoration: underline;
 }
 
-.btn.btn-pagination {
-  color: #868181;
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  font-size: 13px;
 }
 
-.btn.btn-pagination:focus {
-  color: #000;
+.pagination .btn-pagination {
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
 }
 
-.btn.btn-pagination.btn-arrow {
-  text-align: center;
-  font-size: 17px;
-  text-decoration: none;
-}
-
-.btn.btn-arrow {
-  font-size: 17px;
+.pagination .btn-pagination.active {
+  background: #807e7e;
+  color: #fff;
+  font-weight: bold;
 }
 
 .btn.btn-buy {
@@ -409,7 +416,8 @@ h3 {
   text-align: center;
   background-color: #bbb68e;
   border-radius: 3px;
-  max-width: 3.8rem;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
   font-size: 10px;
 }
 
@@ -417,7 +425,8 @@ h3 {
   text-align: center;
   background-color: #ced7d4;
   border-radius: 3px;
-  max-width: 5.6rem;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
   font-size: 10px;
 }
 
@@ -532,7 +541,8 @@ h3 {
   text-align: center;
   background-color: #e8a065;
   border-radius: 3px;
-  max-width: 9vw;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
   font-size: 10px;
 }
 
@@ -540,7 +550,8 @@ h3 {
   text-align: center;
   background-color: #eecbb7;
   border-radius: 3px;
-  max-width: 6vw;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
   font-size: 10px;
 }
 
@@ -555,7 +566,8 @@ h3 {
   text-align: center;
   background-color: #f3e2aa;
   border-radius: 3px;
-  max-width: 7vw;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
   font-size: 10px;
 }
 
@@ -684,14 +696,6 @@ h3 {
     margin-bottom: 48px;
   }
 
-  .monogram.upper-case {
-    max-width: 9vw;
-  }
-
-  .accesories {
-    max-width: 9vw;
-  }
-
   .text-bigcard {
     color: #fff;
     margin-bottom: 25px;
@@ -763,10 +767,6 @@ h3 {
     max-height: 70vh;
   }
 
-  .best-selling.upper-case {
-    max-width: 5.1rem;
-  }
-
   .img-product {
     max-width: 31vw;
     max-height: 28vh;
@@ -804,18 +804,6 @@ h3 {
 
   .footer-divider {
     margin-top: 60px;
-  }
-
-  .fashion.upper-case {
-    max-width: 7vw;
-  }
-
-  .monogram.upper-case {
-    max-width: 14vw;
-  }
-
-  .accesories.upper-case {
-    max-width: 12vw;
   }
 
   .body {
@@ -892,22 +880,6 @@ h3 {
 
   .footer-divider {
     margin-top: -4px;
-  }
-
-  .fashion.upper-case {
-    max-width: 20vw;
-  }
-
-  .monogram.upper-case {
-    max-width: 23vw;
-  }
-
-  .basic.upper-case {
-    max-width: 20vw;
-  }
-
-  .accesories.upper-case {
-    max-width: 22vw;
   }
 
   .text-bigcard {

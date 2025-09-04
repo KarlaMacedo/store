@@ -1,14 +1,16 @@
 const API_URL = "https://api.escuelajs.co/api/v1";
 let allProducts = [];
 let filteredProducts = [];
+let currentPage = 1;
+const itemsPerPage = 18;
 
 //onload page
-window.onload = function() {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'smooth'
-  });
+window.onload = function () {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
 };
 
 //Fetch products and categories
@@ -27,7 +29,7 @@ const fetchData = async (endpoint) => {
 
 const loadProducts = async () => {
     try {
-        const products = await fetchData("products?limit=18&offset=0");
+        const products = await fetchData("products");
         return products;
     } catch (error) {
         console.error(error);
@@ -49,10 +51,10 @@ const initProducts = async () => {
 
     allProducts = products;
     filteredProducts = [...allProducts];
-    renderProducts(filteredProducts);
+    currentPage = 1;
+    paginateProducts();
 };
 initProducts();
-
 
 //close badge
 const closeBadge = () => {
@@ -102,7 +104,8 @@ const handleSearch = () => {
         filteredProducts = allProducts.filter((product) =>
             product.title.toLowerCase().includes(query)
         );
-        renderProducts(filteredProducts);
+        currentPage = 1;
+        paginateProducts();
     });
 
     btnCleanSearch.addEventListener("click", (e) => {
@@ -164,7 +167,8 @@ const handleFilter = () => {
             btnFilter.innerHTML = `Filtrar (${selectedCategories.length})`;
         }
 
-        renderProducts(filteredProducts);
+        currentPage = 1;
+        paginateProducts();
     });
 
     cleanFilterButton.addEventListener("click", (e) => {
@@ -176,7 +180,6 @@ const handleFilter = () => {
     });
 };
 handleFilter();
-
 
 //Sort
 const handleSort = () => {
@@ -387,3 +390,67 @@ const renderCategories = async () => {
     });
 };
 renderCategories();
+
+// Pagination
+const paginateProducts = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    renderProducts(paginatedProducts);
+    renderPagination();
+};
+
+const renderPagination = () => {
+    const paginationContainer = document.getElementById("pagination-container");
+    if (!paginationContainer) return;
+
+    paginationContainer.innerHTML = "";
+
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    if (totalPages <= 1) {
+        paginationContainer.style.display = "none";
+        return;
+    }
+    paginationContainer.style.display = "flex";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.classList.add("btn", "btn-arrow", "btn-pagination", "w-button");
+    prevBtn.textContent = "←";
+    prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            paginateProducts();
+        }
+    });
+    paginationContainer.appendChild(prevBtn);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.textContent = i;
+        pageBtn.classList.add("btn", "btn-pagination", "w-button");
+        if (i === currentPage) pageBtn.classList.add("active");
+
+        pageBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = i;
+            paginateProducts();
+        });
+
+        paginationContainer.appendChild(pageBtn);
+    }
+
+    const nextBtn = document.createElement("button");
+    nextBtn.classList.add("btn", "btn-arrow", "btn-pagination", "w-button");
+    nextBtn.textContent = "→";
+    nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+            currentPage++;
+            paginateProducts();
+        }
+    });
+    paginationContainer.appendChild(nextBtn);
+};
