@@ -4,7 +4,8 @@ let filteredProducts = [];
 let currentPage = 1;
 const itemsPerPage = 18;
 
-//onload page
+
+//Scroll to top on page load improvement UX
 window.onload = function () {
     window.scrollTo({
         top: 0,
@@ -12,6 +13,7 @@ window.onload = function () {
         behavior: 'smooth'
     });
 };
+
 
 //Fetch products and categories
 const fetchData = async (endpoint) => {
@@ -45,7 +47,7 @@ const loadCategories = async () => {
     }
 }
 
-const initProducts = async () => {
+const initProducts = async () => {//Initialize global variables
     const products = await loadProducts();
     if (!products) return;
 
@@ -56,7 +58,8 @@ const initProducts = async () => {
 };
 initProducts();
 
-//close badge
+
+//close top badge
 const closeBadge = () => {
     const badge = document.getElementById("badge");
     const btnClose = document.getElementById("btn-closeBadge");
@@ -73,6 +76,7 @@ const closeBadge = () => {
     }
 }
 closeBadge();
+
 
 //search
 const toggleSearch = () => {
@@ -92,7 +96,7 @@ const toggleSearch = () => {
 }
 toggleSearch();
 
-const handleSearch = () => {
+const handleSearch = () => {//search by title and search clean
     const inputSearch = document.getElementById("input-search");
     const btnSearchForm = document.getElementById("btn-searchForm");
     const btnCleanSearch = document.getElementById("btn-cleanSearch");
@@ -116,6 +120,7 @@ const handleSearch = () => {
     });
 };
 handleSearch();
+
 
 //Filter
 const toggleFilter = () => {
@@ -143,7 +148,7 @@ const toggleFilter = () => {
 }
 toggleFilter();
 
-const handleFilter = () => {
+const handleFilter = () => {//Filter, count and reset filters
     const cleanFilterButton = document.getElementById("btn-cleanFilter");
     const btnFilter = document.getElementById("btn-filter");
     const filterForm = document.getElementById("filter-form");
@@ -180,6 +185,7 @@ const handleFilter = () => {
     });
 };
 handleFilter();
+
 
 //Sort
 const handleSort = () => {
@@ -218,10 +224,11 @@ const handleSort = () => {
 };
 handleSort();
 
+
 //Render products
-const checkImageUrl = async (url) => {
+const checkImageUrl = async (url) => {//if not valid return fallback URL
     try {
-        const fallbackImageUrl = "https://placehold.co/600x400";
+        const fallbackImageUrl = "https://placehold.co/600x400?text=Img+Product";
 
         if (!url || typeof url !== 'string') {
             return fallbackImageUrl;
@@ -235,7 +242,7 @@ const checkImageUrl = async (url) => {
 
         return url;
     } catch (error) {
-        return "https://placehold.co/600x400";
+        return "https://placehold.co/600x400?text=Img+Product";
     }
 };
 
@@ -281,7 +288,7 @@ const renderNormalCard = async (product) => {
 const renderBigCard = async (product) => {
     const productCard = document.createElement("div");
     productCard.classList.add("w-layout-blockcontainer", "card-product", "big-card", "w-container");
-    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400" ?
+    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400?text=Img+Product" ?
         productCard.style.backgroundImage = "url('../images/fondo-bolsarosa.png')" :
         productCard.style.backgroundImage = `url(${product.images[0]})`;
 
@@ -304,7 +311,7 @@ const renderBigCard = async (product) => {
 const renderEndBigCard = async (product) => {
     const productCard = document.createElement("div");
     productCard.classList.add("w-layout-blockcontainer", "card-product", "big-card", "end-card", "w-container");
-    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400" ?
+    await checkImageUrl(product.images[0]) === "https://placehold.co/600x400?text=Img+Product" ?
         productCard.style.backgroundImage = "url('../images/fondo-bolsablanca.png')" :
         productCard.style.backgroundImage = `url(${product.images[0]})`;
 
@@ -324,7 +331,7 @@ const renderEndBigCard = async (product) => {
     return productCard;
 };
 
-const renderProducts = async (productsArray) => {
+const renderProducts = async (productsArray) => {//based on number of products and their position
     const totalProducts = document.getElementById("total-products");
     const productsContainer = document.getElementById("grid-products");
     if (!productsContainer) return;
@@ -332,7 +339,7 @@ const renderProducts = async (productsArray) => {
     productsContainer.innerHTML = "";
     productsContainer.style.display = "";
 
-    totalProducts.innerHTML = `${productsArray.length} artículos`;
+    if (totalProducts) totalProducts.innerHTML = `${productsArray.length} artículos`;
 
     if (!productsArray || productsArray.length === 0) {
         productsContainer.style.display = "flex";
@@ -343,7 +350,7 @@ const renderProducts = async (productsArray) => {
     const productsPromises = productsArray.map((product, index) => {
         if (productsArray.length >= 9 && index === 4) {
             return renderBigCard(product);
-        } else if (productsArray.length === 18 && index === 13) {
+        } else if (productsArray.length >= 18 && index === 13) {
             return renderEndBigCard(product);
         } else {
             return renderNormalCard(product);
@@ -358,8 +365,9 @@ const renderProducts = async (productsArray) => {
 };
 renderProducts();
 
+
 //Render categories
-const renderCategories = async () => {
+const renderCategories = async () => {//insert as filter options
     const categoriesContainer = document.getElementById("filter-options");
     if (!categoriesContainer) return;
 
@@ -394,8 +402,9 @@ const renderCategories = async () => {
 };
 renderCategories();
 
+
 // Pagination
-const paginateProducts = () => {
+const paginateProducts = () => {//Set up global pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
