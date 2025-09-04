@@ -2,6 +2,15 @@ const API_URL = "https://api.escuelajs.co/api/v1";
 let allProducts = [];
 let filteredProducts = [];
 
+//onload page
+window.onload = function() {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  });
+};
+
 //Fetch products and categories
 const fetchData = async (endpoint) => {
     try {

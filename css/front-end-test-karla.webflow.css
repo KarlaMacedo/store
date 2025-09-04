@@ -242,6 +242,10 @@ h3 {
   text-decoration: underline;
 }
 
+.search-containerForm {
+  position: relative;
+}
+
 .search {
   grid-column-gap: 4px;
   grid-row-gap: 4px;
@@ -805,7 +809,7 @@ h3 {
   .btn.button-primary.btn-close {
     margin-top: 3px;
     margin-right: 3px;
-    inset: 0% 0% auto auto;
+    inset: 0% 0% 0% auto;
   }
 
   .btn.btn-buy.upper-case {
