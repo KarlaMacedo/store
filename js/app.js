@@ -338,9 +338,9 @@ const renderProducts = async (productsArray) => {
     }
 
     const productsPromises = productsArray.map((product, index) => {
-        if (index === 4) {
+        if (productsArray.length >= 9 && index === 4) {
             return renderBigCard(product);
-        } else if (index === 13) {
+        } else if (productsArray.length === 18 && index === 13) {
             return renderEndBigCard(product);
         } else {
             return renderNormalCard(product);
@@ -465,6 +465,6 @@ const renderPagination = () => {
             paginateProducts();
         }
     });
-    
+
     paginationContainer.appendChild(nextBtn);
 };
