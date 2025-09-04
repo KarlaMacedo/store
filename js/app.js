@@ -58,12 +58,14 @@ initProducts();
 const closeBadge = () => {
     const badge = document.getElementById("badge");
     const btnClose = document.getElementById("btn-closeBadge");
+    const navbarLogoContainer = document.getElementById("navbar-logo-container");
 
     if (btnClose) {
         btnClose.addEventListener("click", (e) => {
             e.preventDefault();
             if (badge) {
                 badge.style.display = "none";
+                navbarLogoContainer.style.top = "0";
             }
         });
     }

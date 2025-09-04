@@ -60,6 +60,12 @@ h3 {
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 4px 7px #ededed;
+  position: fixed;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background-color: white;
 }
 
 .navbar-logo-center-container {
@@ -163,6 +169,11 @@ h3 {
   padding-right: 12px;
   display: flex;
   position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
 }
 
 .upper-case {
@@ -289,6 +300,7 @@ h3 {
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
+  margin-top: 15vh;
 }
 
 .header-page {
